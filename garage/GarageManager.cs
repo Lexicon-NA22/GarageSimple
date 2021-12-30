@@ -26,31 +26,50 @@ namespace MyGarage
 
         public bool DriveOut(string regNum)
         {
-            return _garage.Remove(regNum);
+            var found = FindVehicleByRegNum(regNum);
+            return found is null ? false : _garage.Remove(found);
+            //return _garage.Remove(regNum);
         }
 
-        public Vehicle[] FindVehicleByString(string keyword)
+        public string[] FindVehicleByString(string keyword)
         {
-            return _garage.FindByString(keyword);
+            return _garage.Where(vehicle => vehicle.Matches(keyword))
+                            .Select(vehicle => $"{vehicle}")
+                            .ToArray();
+            //return _garage.FindByString(keyword);
         }
 
         public Vehicle FindVehicleByRegNum(string regNum)
         {
-            return _garage.FindByRegNum(regNum);
+            return _garage.FirstOrDefault(v => v.RegNum == regNum);
+            //return _garage.FindByRegNum(regNum);
         }
 
-        public Vehicle[] FindVehicleByType(string type)
+        public IEnumerable<Vehicle> FindVehicleByType(string type)
         {
-            List<Vehicle> result = new List<Vehicle>();
-            foreach (Vehicle v in _garage)
-                if (v.GetType().Name == type)
-                    result.Add(v);
+            return _garage.Where(v => v.GetType().Name == type);
 
-            return result.ToArray();
+            //List<Vehicle> result = new List<Vehicle>();
+            //foreach (Vehicle v in _garage)
+            //    if (v.GetType().Name == type)
+            //        result.Add(v);
+
+            //return result.ToArray();
         }
+
+        //public bool TestM(Vehicle v)
+        //{
+        //    return v.Color == "Red";
+        //}
 
         public string[] GetAllVehicles()
         {
+            //var res = _garage.Where(v => v.Color == "Red");
+                    
+           // var res2 = _garage.Where(TestM);
+
+           // return _garage.Select(v => string.Format($"P-plats  {v.ToString()}")).ToArray();
+
             Vehicle[] vehicle = _garage.ToArray();
             string[] result = new string[_garage.Count()];
 
@@ -77,6 +96,16 @@ namespace MyGarage
 
         public string GetStatistics()
         {
+
+            //var res = _garage.GroupBy(v => v.GetType().Name)
+            //                 .Select(v => new Stats()
+            //                 {
+            //                     Name = v.Key,
+            //                     NrOfVheicles = v.Count()
+            //                 })
+            //                 .Select(s => $"Name: {s.Name} Count: {s.NrOfVheicles}");
+                             
+
             Dictionary<string, int> types = new Dictionary<string, int>();
             Vehicle[] vehicle = _garage.GetAll();
             int n;

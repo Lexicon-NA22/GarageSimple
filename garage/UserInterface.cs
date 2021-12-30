@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Text.RegularExpressions;
 
@@ -37,10 +39,10 @@ namespace MyGarage
         {
         }
 
-        public UserInterface(GarageManager gm)
-        {
-            _garageManager = gm;
-        }
+        //public UserInterface(GarageManager gm)
+        //{
+        //    _garageManager = gm;
+        //}
 
         /// <summary>
         /// Skapar eller läser in ett garage från disk.
@@ -217,9 +219,9 @@ namespace MyGarage
             Console.Clear();
             string input = promptForStringInput("Skriv in sökord: ");
             
-            Vehicle[] vehicles = _garageManager.FindVehicleByString(input);
+            string[] vehicles = _garageManager.FindVehicleByString(input);
             if(vehicles.Length > 0)
-                foreach (Vehicle v in vehicles)
+                foreach (string v in vehicles)
                     Console.WriteLine(v);
             else
                 Console.WriteLine("Inga sökträffar.");
@@ -231,7 +233,7 @@ namespace MyGarage
         private void FindVehicleByType()
         {
             string input;
-            Vehicle[] vehicles;
+            IEnumerable<Vehicle> vehicles;
 
             Console.Clear();
 
@@ -269,7 +271,7 @@ namespace MyGarage
                 {
                     vehicles = _garageManager.FindVehicleByType(input);
 
-                    if (vehicles.Length > 0)
+                    if (vehicles.Count() > 0)
                         foreach (var vehicle in vehicles)
                             Console.WriteLine(vehicle);
                     else

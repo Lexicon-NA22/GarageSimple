@@ -17,14 +17,16 @@ namespace MyGarage
     [Serializable]
     class Garage<T> : IEnumerable<T> where T : Vehicle
     {
-
+        private int size;
         T[] _spaces; // En array med parkeringsplatser.
         int _count = 0; // Räknare för antal fordon.
-        public int Size { get { return _spaces.Length; } } // Storleken på garaget.
+        public int Size => size;      //_spaces.Length; // { get { return _spaces.Length; } } // Storleken på garaget.
 
 
         public Garage(int size)
         {
+            //Validate size
+            this.size = size;
             _spaces = new T[size];
         }
 
@@ -58,19 +60,16 @@ namespace MyGarage
             return false;
         }
         // Returnera objektet.
-        public bool Remove(string regNum)
+        public bool Remove(T vehicle)
         {
             for (int i = 0; i < _spaces.Length; i++)
             {
-                if (_spaces[i] != null)
-                {
-                    if (_spaces[i].RegNum == regNum)
+                    if (_spaces[i] == vehicle)
                     {
                         _spaces[i] = null;
                         _count--;
                         return true;
                     }
-                }
             }
 
             return false;
@@ -88,13 +87,18 @@ namespace MyGarage
 
         public T[] FindByString(string keyword)
         {
-            Dictionary<string, Vehicle> vehicles = new Dictionary<string, Vehicle>();
+           
+
+            Dictionary<string, Vehicle> vehicles = new Dictionary<string, Vehicle>()
+            {
+                {"ABC123", _spaces[0] }
+            };
 
             for (int i = 0; i < _spaces.Length; i++)
             {
-                if(_spaces[i] != null)
+                if (_spaces[i] != null)
                 {
-                    if(_spaces[i].Matches(keyword))
+                    if (_spaces[i].Matches(keyword))
                         vehicles[_spaces[i].RegNum] = _spaces[i];
                 }
             }

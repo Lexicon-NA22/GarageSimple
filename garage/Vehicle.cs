@@ -9,20 +9,20 @@ namespace MyGarage
         string _color;
         int _wheelCount;
 
-        public string RegNum { get { return _regNum; }  }
+        public string RegNum { get { return _regNum; }   }
         public string Color { get { return _color; }  }
         public int WheelCount { get { return _wheelCount; }  }
 
         public Vehicle(string regNum, string color, int wheelCount)
         {
-            _regNum = regNum;
+            _regNum = regNum.ToUpper();
             _color = color;
             _wheelCount = wheelCount;
         }
 
         public Vehicle(Vehicle c)
         {
-            _regNum = c.RegNum;
+            _regNum = c.RegNum.ToUpper();
             _color = c.Color;
             _wheelCount = c.WheelCount;
         }

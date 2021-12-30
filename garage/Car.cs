@@ -16,7 +16,7 @@ namespace MyGarage
         }
 
         public Car(Vehicle v, int cylinderCount, int engineSize)
-            : base(v.RegNum, v.Color, v.WheelCount)
+            : base(v)
         {
             CylinderCount = cylinderCount;
             EngineSize = engineSize;

@@ -16,7 +16,7 @@ namespace MyGarage
         }
 
         public Bus(Vehicle v, int numerOfSeats, bool isDoubleDecker)
-            : base(v.RegNum, v.Color, v.WheelCount)
+            : base(v)
         {
             NumerOfSeats = numerOfSeats;
             IsDoubleDecker = isDoubleDecker;
